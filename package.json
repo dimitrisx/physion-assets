@@ -1,0 +1,17 @@
+{
+	"name": "physion-assets",
+	"version": "1.0.0",
+	"description": "Physion Assets",
+	"main": "./src/cli.ts",
+	"author": "Dimitris Xanthopoulos",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"cli": "ts-node src/cli.ts"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.12",
+		"ts-node": "^10.4.0",
+		"typescript": "^4.5.5"
+	}
+}
