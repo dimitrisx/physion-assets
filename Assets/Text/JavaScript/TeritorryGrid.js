@@ -7,11 +7,11 @@ class TeritorryGrid
 {
   constructor (width, height, boxSize, x, y)
   {
-    this.w = width;
-    this.h = height;
-    this.b = boxSize;
-    this.x = x;
-    this.y = y;
+    this.w = width || 8;
+    this.h = height || 8;
+    this.b = boxSize || 1;
+    this.x = x || 0;
+    this.y = y || 0;
   }
   
   async create (scene, pos)
