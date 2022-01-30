@@ -10,8 +10,8 @@ class TeritorryGrid
     this.w = width || 8;
     this.h = height || 8;
     this.b = boxSize || 1;
-    this.x = x || 0;
-    this.y = y || 0;
+    if (typeof this.x === "number") this.x = x; else this.x = 0;
+    if (typeof this.y === "number") this.y = y; else this.y = 0;
   }
   
   async create (scene, pos)
