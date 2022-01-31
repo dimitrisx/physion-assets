@@ -6,7 +6,7 @@ import * as types from "./ types";
 import * as constants from "./constants";
 
 // ================================================================================================
-function createIndex() {
+function updateIndex() {
 	const assets: types.IAsset[] = [];
 	processDirectory(constants.ASSETS_DIR, assets);
 
@@ -78,8 +78,8 @@ if (args.length !== 1) {
 } else {
 	const command = args[0];
 	switch (command) {
-		case "createIndex":
-			createIndex();
+		case "updateIndex":
+			updateIndex();
 			break;
 		default:
 			console.log(`Invalid command ${command}`);
