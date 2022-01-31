@@ -11,7 +11,7 @@ class QuadTracer {
         this.maxTrajectorySize = 50;
         this.graphics = physion.utils.createGraphics();
         this.lineStyle = physion.utils.createLineStyle(0);
-        this.fillStyle = physion.utils.createFillStyle(node.color || 0);
+        this.fillStyle = physion.utils.createFillStyle(node.fillColor || 0);
         this.radius = (node.radius || 1.0) * 0.8;
         this.prevAngle = Math.PI / 2;
     }
