@@ -11,7 +11,7 @@ class Bumper {
 
 	update(delta) {
 		for (let bodyNode of this.inContactWith) {
-			bodyNode.applyLinearImpulse({ x: 0, y: this.power * bodyNode.body.getMass() });
+			bodyNode.applyLinearImpulse({ x: 0, y: this.power * bodyNode.body.GetMass() });
 		}
 		this.inContactWith.clear();
 	}
