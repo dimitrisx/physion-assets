@@ -7,7 +7,7 @@ class SimpleCar {
 		this.wheelRadius = wheelRadius || 1;
 		this.bodyLength = bodyLength || 4;
 		this.motorSpeed = motorSpeed || -1;
-		this._fillTextureUrl = "https://res.cloudinary.com/jeronimo/image/upload/Assets/Images/Wheels/BicycleWheel.webp";
+		this._fillTextureUrl = "https://raw.githubusercontent.com/dimitrisx/physion-assets/master/Assets/Image/Wheels/BicycleWheel.webp";
 	}
 
 	async create(scene, position) {
