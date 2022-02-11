@@ -1,5 +1,13 @@
 [
 	{
+		"path": "Assets/Audio/Blip.mp3",
+		"mime": "audio/mpeg"
+	},
+	{
+		"path": "Assets/Font/Backslash-RpJol.otf",
+		"mime": "font/otf"
+	},
+	{
 		"path": "Assets/Image/Balls/BasketBall.webp",
 		"mime": "image/webp",
 		"tags": [
