@@ -1,7 +1,7 @@
 /**
  * Script to trace and draw the trajectory of a Node
  */
- class Tracer {
+class Tracer {
 
 	constructor(node) {
 		this.node = node;
@@ -11,9 +11,9 @@
 		this.maxTrajectorySize = 100;
 
 		if (typeof physion !== "undefined") {
-			this.graphics = physion?.utils.createGraphics();
-			this.lineStyle = physion?.utils.createLineStyle(0);
-			this.fillStyle = physion?.utils.createFillStyle(0xff0000);	
+			this.graphics = physion.utils.createGraphics();
+			this.lineStyle = physion.utils.createLineStyle(0);
+			this.fillStyle = physion.utils.createFillStyle(0xff0000);
 		}
 
 		this.tracerRadius = 0.1;
@@ -28,24 +28,24 @@
 			}
 		}
 
-		this.#updateTrajectory();
-		this.#drawTracer();
+		this.updateTrajectory();
+		this.drawTracer();
 	}
 
-	#updateTrajectory() {
+	updateTrajectory() {
 		this.trajectory.push(this.node.getPosition());
-		while(this.trajectory.length > this.maxTrajectorySize) {
+		while (this.trajectory.length > this.maxTrajectorySize) {
 			this.trajectory.shift();
 		}
 	}
 
-	#drawTracer() {
+	drawTracer() {
 		if (this.graphics && this.fillStyle) {
 			this.graphics.clear();
 			this.trajectory.forEach((point, i) => {
 				this.fillStyle.alpha = (i + 1) / this.trajectory.length;
 				physion.utils.drawStyledCircle(this.graphics, point.x, point.y, this.tracerRadius, this.lineStyle, this.fillStyle);
-			});	
+			});
 		}
 	}
 }

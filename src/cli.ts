@@ -24,7 +24,7 @@ function processDirectory(dirPath: string, assets: types.IAsset[], metadata: any
 	}
 
 	const entries = fs.readdirSync(dirPath);
-	const filteredEntries = entries.filter((e) => !e.endsWith(constants.META_EXTENSION) && !e.endsWith(constants.INDEX_JSON));
+	const filteredEntries = entries.filter((e) => !e.endsWith(constants.META_EXTENSION) && !e.endsWith(constants.INDEX_JSON) && !e.startsWith("."));
 	for (const entry of filteredEntries) {
 		const metadataCopy = Object.assign({}, metadata);
 		const entryPath = `${dirPath}/${entry}`;
@@ -71,7 +71,7 @@ function getMimeType(filePath: string) {
 }
 
 // ================================================================================================
-const args = process.argv.slice(2)
+const args = process.argv.slice(2);
 if (args.length !== 1) {
 	console.log("Invalid syntax.");
 	process.exit(-1);
