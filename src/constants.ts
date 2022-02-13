@@ -10,4 +10,6 @@ export const EXT_TO_MIME_TYPE: Record<string, AssetMimeType> = {
 	"webp": "image/webp",
 	"png": "image/png",
 	"js": "text/javascript",
-}
+	"mp3": "audio/mpeg",
+	"otf": "font/otf",
+};

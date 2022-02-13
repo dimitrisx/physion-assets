@@ -6,7 +6,13 @@ export type AssetMimeType =
 	"text/plain" |
 	"text/javascript" |
 	"text/csv" |
-	"text/html";
+	"text/html" |
+	"audio/mpeg" |
+	"audio/wav" |
+	"font/otf" |
+	"font/ttf" |
+	"font/woff" |
+	"font/woff2";
 
 export interface IAsset {
 	path: string,

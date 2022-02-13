@@ -25,11 +25,11 @@ class QuadTracer {
                 scene.layers.background.addChild(this.graphics);
             }
         }
-        this.#updateTrajectory();
-        this.#drawTracer();
+        this.updateTrajectory();
+        this.drawTracer();
     }
 
-    #updateTrajectory() {
+    updateTrajectory() {
         this.trajectory.push({
             pos: this.node.getPosition(),
             vel: {
@@ -42,13 +42,13 @@ class QuadTracer {
         }
     }
 
-    #drawTracer() {
+    drawTracer() {
         this.graphics.clear();
         this.trajectory.forEach((point, i) => {
             if (i != this.trajectory.length - 1) {
                 this.fillStyle.alpha = (i + 1) / this.trajectory.length;
-                const c0 = this.#convert(point.pos, point.vel);
-                const c1 = this.#convert(this.trajectory[i + 1].pos, this.trajectory[i + 1].vel);
+                const c0 = this.convert(point.pos, point.vel);
+                const c1 = this.convert(this.trajectory[i + 1].pos, this.trajectory[i + 1].vel);
                 const quadVertice = [
                     c0[0], c0[1], c1[1], c1[0]
                 ];
@@ -57,7 +57,7 @@ class QuadTracer {
         });
     }
 
-    #convert(pos, vel) {
+    convert(pos, vel) {
         var angle = this.prevAngle;
         if (!(vel.y == 0 && vel.x == 0)) {
             angle = Math.atan2(vel.y, vel.x);

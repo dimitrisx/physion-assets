@@ -1,0 +1,21 @@
+{
+	"parserOptions": {
+		"ecmaVersion": 2017
+	},
+	"env": {
+		"es6": true
+	},
+	"globals": {
+		"physion": "readonly"
+	},
+	"extends": [
+		"eslint:recommended"
+	],
+	"rules": {
+		"quotes": [
+			1,
+			"double"
+		],
+		"no-unused-vars": "off"
+	}
+}
