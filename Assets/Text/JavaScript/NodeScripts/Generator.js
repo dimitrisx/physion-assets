@@ -5,7 +5,7 @@ class Generator {
 
 	constructor(node) {
 		this.node = node;
-		this.node.bodyType = "kinematic";
+		this.node.bodyType = "Kinematic";
 		this.node.active = false;
 		this.node.alpha = 0.5;
 
@@ -16,8 +16,8 @@ class Generator {
 	update(delta) {
 		if (++this.counter % this.frequency === 0) {
 			const clone = this.node.clone();
-			clone.scriptText = "";
-			clone.bodyType = "dynamic";
+			clone.scripts = [];
+			clone.bodyType = "Dynamic";
 			clone.active = true;
 			clone.alpha = 1;
 			this.node.parent.addChild(clone);
