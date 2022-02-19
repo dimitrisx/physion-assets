@@ -80,17 +80,20 @@ class CountryMarbleGenerator {
 		for (let y = startY; y <= endY; y += diam) {
 			for (let x = startX; x <= endX; x += diam) {
 				if (index < n) {
-					const marble = await this.createCountryMarble(countries[index], x, y, r);
-					scene.addChild(marble);
+					await this.createCountryMarble(scene, countries[index], x, y, r);
 					index++;
 				}
 			}
 		}
 	}
 
-	async createCountryMarble(country, x, y, r) {
+	async createCountryMarble(scene, country, x, y, r) {
 		const flagUrl = "https://hatscripts.github.io/circle-flags/flags/" + country.cca2.toLocaleLowerCase() + ".svg";
 		await physion.utils.preloadTexture(flagUrl);
+
+		const imageAsset = new physion.ImageAsset(flagUrl);
+		imageAsset.name = country.name.common;
+		scene.assetsLibrary.addAsset(imageAsset);
 
 		const marble = new physion.CircleNode(r);
 		marble.initNode(x, y);
@@ -99,8 +102,11 @@ class CountryMarbleGenerator {
 		marble.restitution = this.marbleRestitution;
 		marble.drawLine = false;
 		marble.lineWidth = 0;
-		marble.fillTextureUrl = flagUrl;
+		marble.fillTexture = imageAsset.id;
+
+		scene.addChild(marble);
+
+		// This needs to be called after the marble has been added to the Scene
 		marble.autoAdjustFillTexture();
-		return marble;
 	}
 }
