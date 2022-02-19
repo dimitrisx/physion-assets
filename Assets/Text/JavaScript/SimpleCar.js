@@ -7,16 +7,16 @@ class SimpleCar {
 		this.wheelRadius = wheelRadius || 1;
 		this.bodyLength = bodyLength || 4;
 		this.motorSpeed = motorSpeed || -1;
-		this._fillTextureUrl = "https://raw.githubusercontent.com/dimitrisx/physion-assets/master/Assets/Image/Wheels/BicycleWheel.webp";
+		this._wheelUrl = "https://raw.githubusercontent.com/dimitrisx/physion-assets/master/Assets/Image/Wheels/BicycleWheel.webp";
 	}
 
 	async create(scene, position) {
 
 		position = position || { x: 0, y: 0 };
 
-		await physion.utils.preloadTexture(this._fillTextureUrl);
+		await physion.utils.preloadTexture(this._wheelUrl);
 
-		const imageAsset = new physion.ImageAsset(this._fillTextureUrl);
+		const imageAsset = new physion.ImageAsset(this._wheelUrl);
 		imageAsset.name = "Wheel";
 		scene.assetsLibrary.addAsset(imageAsset);
 
