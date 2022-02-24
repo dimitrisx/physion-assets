@@ -20,7 +20,7 @@ class TeritorryGrid {
 				const f = 1 + (this.overlapping ? this.boxSize / 1000.0 : 0);
 				const box = new physion.RectangleNode(this.boxSize * f, this.boxSize * f);
 				box.initNode(posx, posy);
-				box.bodyType = "Static";
+				box.bodyType = "static";
 				box.friction = 0;
 				box.restitution = 1;
 				box.lineAlpha = (this.drawBorder ? 1 : 0);
