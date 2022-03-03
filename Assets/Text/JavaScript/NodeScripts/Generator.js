@@ -16,7 +16,7 @@ class Generator {
 	update(delta) {
 		if (++this.counter % this.frequency === 0) {
 			const clone = this.node.clone();
-			clone.scriptText = "";
+			clone.scripts = [];
 			clone.bodyType = "dynamic";
 			clone.active = true;
 			clone.alpha = 1;
