@@ -18,6 +18,13 @@ function processDirectory(dirPath: string, assets: types.IAsset[], metadata: any
 
 	// Check for directory metadata
 	const dirName = dirPath.split("/").pop();
+
+	// For the time being, skip Audio and Font directories
+	if (dirName === "Audio" || dirName === "Font") {
+		console.log(`Skipping directory ${dirName}`);
+		return;
+	}
+
 	const dirMetadataPath = `${dirPath}/_${dirName}.${constants.META_EXTENSION}`;
 	if (fs.existsSync(dirMetadataPath)) {
 		applyMetadata(metadata, dirMetadataPath);
