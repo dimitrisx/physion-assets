@@ -8,6 +8,8 @@ class QuadTracer {
         // tracer variable
         this.initialized = false;
         this.trajectory = [];
+        this.requestProperties = undefined;
+
         this.maxTrajectorySize = 50;
         this.graphics = physion.utils.createGraphics();
         this.lineStyle = physion.utils.createLineStyle(0);
@@ -30,31 +32,36 @@ class QuadTracer {
     }
 
     updateTrajectory() {
-        this.trajectory.push({
+        this.requestProperties = {
             pos: this.node.getPosition(),
             vel: {
                 x: this.node.linearVelocityX,
                 y: this.node.linearVelocityY
             }
-        });
-        while (this.trajectory.length > this.maxTrajectorySize + 1) {
-            this.trajectory.shift();
-        }
+        };
     }
 
     drawTracer() {
         this.graphics.clear();
+        if (this.requestProperties)
+        {
+            const c0 = this.convert(this.requestProperties.pos, this.requestProperties.vel);
+            this.trajectory.push([
+                c0[0], c0[1]
+            ]);
+        }
+
         this.trajectory.forEach((point, i) => {
             if (i != this.trajectory.length - 1) {
                 this.fillStyle.alpha = (i + 1) / this.trajectory.length;
-                const c0 = this.convert(point.pos, point.vel);
-                const c1 = this.convert(this.trajectory[i + 1].pos, this.trajectory[i + 1].vel);
                 const quadVertice = [
-                    c0[0], c0[1], c1[1], c1[0]
+                    point[0], point[1], this.trajectory[i + 1][1], this.trajectory[i + 1][0]
                 ];
                 physion.utils.drawStyledPolygon(this.graphics, quadVertice, this.lineStyle, this.fillStyle);
             }
         });
+
+        if (this.trajectory.length > this.maxTrajectorySize) this.trajectory.shift();
     }
 
     convert(pos, vel) {
