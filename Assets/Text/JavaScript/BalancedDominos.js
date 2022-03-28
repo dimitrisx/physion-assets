@@ -1,6 +1,5 @@
 /**
- * This script will some balanced dominos
- * 
+ * Creates balanced dominos
  */
 class BalancedDominos {
 
@@ -9,6 +8,9 @@ class BalancedDominos {
 	}
 
 	async create(scene, position) {
+
+		position = position || { x: 0, y: 0 };
+
 		const s = this.size;
 		const dW = 0.25;	// Domino width
 		const dH = 1.0;	// Domino height
@@ -20,6 +22,7 @@ class BalancedDominos {
 		const createDomino = (x, y, w, h) => {
 			var rectangle = new physion.RectangleNode();
 			rectangle.initNode(x, y, 0);
+			rectangle.fillColor = physion.utils.randomColor();
 			rectangle.width = w;
 			rectangle.height = h;
 			return rectangle;
