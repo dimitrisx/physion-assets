@@ -38,6 +38,7 @@ class SimpleCar {
 	createBody(x, y, w, h) {
 		var body = new physion.RectangleNode(w, h);
 		body.initNode(x, y);
+		body.fillColor = physion.utils.randomColor();
 		body.density = 2;
 		return body;
 	}
