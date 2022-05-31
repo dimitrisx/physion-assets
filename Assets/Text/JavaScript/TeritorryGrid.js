@@ -3,7 +3,7 @@
   Written by Box.
 */
 class TeritorryGrid {
-	constructor(width, height, boxSize, x, y, drawBorder, overlapping) {
+	constructor(width, height, boxSize, x, y, drawBorder) {
 		this.width = width || 8;
 		this.height = height || 8;
 		this.boxSize = boxSize || 1;
