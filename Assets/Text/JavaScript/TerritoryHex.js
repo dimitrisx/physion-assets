@@ -2,7 +2,7 @@
   Grid generator (filled with hexagons instead of rects) for Teritorry Wars or Multiply or Release or stuffs.
   Written by Box.
 */
-class TeritorryGrid 
+class TeritorryGrid
 {
 	constructor(width, height, hexSize, x, y, drawBorder) //, isFlatTop) 
     {
@@ -23,19 +23,19 @@ class TeritorryGrid
         {
 			for (let j = 0; j < this.height; j++) 
             {
-				const posx = i * 1.5 * this.hexSize + this.x;
-				const posy = j * this.hexSize + this.y;
+				const posx = i * .75 * this.hexSize + this.x;
+				const posy = (j + (i % 2 == 1 ? .5 : 0)) * this.hexSize + this.y;
 
 				const hex = new physion.PolygonNode();
                 hex.initNode(posx, posy);
 
-                var array = [];
+                var array = [[]];
                 for (var z = 0; z < 6; z++)
                 {
-                    array.push([{
+                    array[0].push({
                         x: Math.cos(z * Math.PI / 3.0),
                         y: Math.sin(z * Math.PI / 3.0)
-                    }])
+                    })
                 }
                 hex.polygon = array;
 				
