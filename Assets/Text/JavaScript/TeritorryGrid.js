@@ -1,5 +1,5 @@
 /*
-  Grid generator for Teritorry Wars or Multiply || Release or stuffs.
+  Grid generator for Teritorry Wars or Multiply or Release or stuffs.
   Written by Box.
 */
 class TeritorryGrid {
