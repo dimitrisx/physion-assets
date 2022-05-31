@@ -37,7 +37,7 @@ class TeritorryGrid
                         y: Math.sin(z * Math.PI / 3.0)
                     })
                 }
-                hex.polygon = array;
+                hex.polygons = array;
 				
 				hex.bodyType = "static";
 				hex.friction = 0;
