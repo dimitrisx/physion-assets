@@ -407,5 +407,9 @@
 	{
 		"path": "Assets/Text/JavaScript/TeritorryGrid.js",
 		"mime": "text/javascript"
+	},
+	{
+		"path": "Assets/Text/JavaScript/TerritoryHex.js",
+		"mime": "text/javascript"
 	}
 ]
