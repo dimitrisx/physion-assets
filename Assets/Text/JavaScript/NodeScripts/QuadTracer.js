@@ -21,7 +21,7 @@ class QuadTracer {
             this.initialized = true;
             const scene = this.node.findSceneNode();
             if (scene) {
-                scene.layers.middleground.addChildAt(this.graphics, 6);
+                scene.layers.background.addChild(this.graphics);
             }
         }
         this.updateTrajectory();
