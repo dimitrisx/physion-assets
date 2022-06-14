@@ -1,6 +1,3 @@
-/*
- * Quad-based tracer script
- */
 class QuadTracer {
     constructor(node) {
         this.node = node;
@@ -8,9 +5,9 @@ class QuadTracer {
         // tracer variable
         this.initialized = false;
         this.trajectory = [];
-        this.requestProperties = undefined;
+        this.lastPosition = undefined;
 
-        this.maxTrajectorySize = 50;
+        this.maxTrajectorySize = 20;
         this.graphics = physion.utils.createGraphics();
         this.lineStyle = physion.utils.createLineStyle(0);
         this.fillStyle = physion.utils.createFillStyle(node.fillColor || 0);
@@ -32,24 +29,19 @@ class QuadTracer {
     }
 
     updateTrajectory() {
-        this.requestProperties = {
-            pos: this.node.getPosition(),
-            vel: {
-                x: this.node.linearVelocityX,
-                y: this.node.linearVelocityY
-            }
-        };
-    }
-
-    drawTracer() {
-        this.graphics.clear();
-        if (this.requestProperties)
+        var current = this.node.getPosition();
+        if (this.lastPosition)
         {
-            const c0 = this.convert(this.requestProperties.pos, this.requestProperties.vel);
+            const c0 = this.convert(current, this.lastPosition);
             this.trajectory.push([
                 c0[0], c0[1]
             ]);
         }
+        this.lastPosition = current;
+    }
+
+    drawTracer() {
+        this.graphics.clear();
 
         this.trajectory.forEach((point, i) => {
             if (i != this.trajectory.length - 1) {
@@ -64,19 +56,18 @@ class QuadTracer {
         if (this.trajectory.length > this.maxTrajectorySize) this.trajectory.shift();
     }
 
-    convert(pos, vel) {
-        var angle = this.prevAngle;
-        if (!(vel.y == 0 && vel.x == 0)) {
-            angle = Math.atan2(vel.y, vel.x);
-            this.prevAngle = angle;
-        }
+    convert(pos, prevPos) {
+        var v = {x: pos.x - prevPos.x, y: pos.y - prevPos.y};
+        var n = Math.sqrt(v.x ** 2 + v.y ** 2);
+        var nx = v.x / n, ny = v.y / n;
+        
         return [{
-                x: Math.cos(angle + Math.PI / 2) * this.radius + pos.x,
-                y: Math.sin(angle + Math.PI / 2) * this.radius + pos.y
+                x: ny * this.radius + pos.x,
+                y: -nx * this.radius + pos.y
             },
             {
-                x: Math.cos(angle - Math.PI / 2) * this.radius + pos.x,
-                y: Math.sin(angle - Math.PI / 2) * this.radius + pos.y
+                x: -ny * this.radius + pos.x,
+                y: nx * this.radius + pos.y
             }
         ];
     }

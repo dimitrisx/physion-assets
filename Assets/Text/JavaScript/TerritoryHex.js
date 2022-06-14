@@ -2,7 +2,7 @@
   Grid generator (filled with hexagons instead of rects) for Teritorry Wars or Multiply or Release or stuffs.
   Written by Box.
 */
-class TeritorryGrid
+class TeritorryHex
 {
 	constructor(width, height, hexSize, x, y, drawBorder) //, isFlatTop) 
     	{
