@@ -379,6 +379,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/GravityPad.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/QuadTracer.js",
 		"mime": "text/javascript",
 		"tags": [
