@@ -351,6 +351,10 @@
 		"mime": "text/javascript"
 	},
 	{
+		"path": "Assets/Text/JavaScript/HexGrid.js",
+		"mime": "text/javascript"
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/Attractor.js",
 		"mime": "text/javascript",
 		"tags": [
@@ -412,11 +416,7 @@
 		"mime": "text/javascript"
 	},
 	{
-		"path": "Assets/Text/JavaScript/TeritorryGrid.js",
-		"mime": "text/javascript"
-	},
-	{
-		"path": "Assets/Text/JavaScript/TerritoryHex.js",
+		"path": "Assets/Text/JavaScript/SquareGrid.js",
 		"mime": "text/javascript"
 	}
 ]
