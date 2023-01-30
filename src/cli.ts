@@ -49,6 +49,11 @@ function processFile(filePath: string, metadata: any): types.IAsset {
 	const mimeType = getMimeType(filePath);
 	assert(mimeType);
 
+	const fileMetadataPath = `${filePath}.${constants.META_EXTENSION}`;
+	if (fs.existsSync(fileMetadataPath)) {
+		applyMetadata(metadata, fileMetadataPath);
+	}
+
 	return {
 		path: filePath,
 		mime: mimeType,
