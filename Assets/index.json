@@ -91,7 +91,8 @@
 		"path": "Assets/Image/Sprites/BlueNebula.webp",
 		"mime": "image/webp",
 		"tags": [
-			"Sprite"
+			"Sprite",
+			"Background"
 		]
 	},
 	{
