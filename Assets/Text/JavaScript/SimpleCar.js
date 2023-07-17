@@ -53,10 +53,10 @@ class SimpleCar {
 	}
 
 	createRevoluteJoint(body, wheel) {
-		const pA = body.getSceneTransform().applyInverse(wheel.getScenePosition());
-		const pB = { x: 0, y: 0 };
+		const localAnchorWheel = { x: 0, y: 0 };
+		const localAnchorBody = body.getSceneTransform().applyInverse(wheel.getScenePosition());
 
-		var joint = new physion.RevoluteJointNode(body.id, wheel.id, pA, pB);
+		var joint = new physion.RevoluteJointNode(wheel.id, body.id, localAnchorWheel, localAnchorBody);
 		joint.motorEnabled = true;
 		joint.motorSpeed = this.motorSpeed;
 		joint.fillColor = 0xcccccc;
