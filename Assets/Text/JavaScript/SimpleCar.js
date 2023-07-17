@@ -23,24 +23,30 @@ class SimpleCar {
 		const r = this.wheelRadius;
 		const l = this.bodyLength;
 
-		var body = this.createBody(position.x, position.y, l, r / 2);
+		var chassis = this.createChassis(position.x, position.y, l, r / 2);
 		var wheelA = this.createWheel(position.x - l / 2, position.y, r, imageAsset.id);
 		var wheelB = this.createWheel(position.x + l / 2, position.y, r, imageAsset.id);
-		var jointA = this.createRevoluteJoint(body, wheelA);
-		var jointB = this.createRevoluteJoint(body, wheelB);
+		var jointA = this.createRevoluteJoint(chassis, wheelA);
+		var jointB = this.createRevoluteJoint(chassis, wheelB);
 
-		scene.addChildren([body, wheelA, wheelB, jointA, jointB]);
+		chassis.name = "chassis";
+		wheelA.name = "wheelA";
+		wheelB.name = "wheelB";
+		jointA.name = "jointA";
+		jointB.name = "jointB";
+
+		scene.addChildren([chassis, wheelA, wheelB, jointA, jointB]);
 
 		wheelA.autoAdjustFillTexture();
 		wheelB.autoAdjustFillTexture();
 	}
 
-	createBody(x, y, w, h) {
-		var body = new physion.RectangleNode(w, h);
-		body.initNode(x, y);
-		body.fillColor = physion.utils.randomColor();
-		body.density = 2;
-		return body;
+	createChassis(x, y, w, h) {
+		var chassis = new physion.RectangleNode(w, h);
+		chassis.initNode(x, y);
+		chassis.fillColor = physion.utils.randomColor();
+		chassis.density = 2;
+		return chassis;
 	}
 
 	createWheel(x, y, r, fillTexture) {
