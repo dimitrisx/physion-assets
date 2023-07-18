@@ -6,7 +6,7 @@ class SimpleCar {
 	constructor(wheelRadius, bodyLength, motorSpeed) {
 		this.wheelRadius = wheelRadius || 1;
 		this.bodyLength = bodyLength || 4;
-		this.motorSpeed = motorSpeed || -1;
+		this.motorSpeed = motorSpeed || 1;
 		this._wheelUrl = "https://raw.githubusercontent.com/dimitrisx/physion-assets/master/Assets/Image/Wheels/BicycleWheel.webp";
 	}
 
@@ -26,16 +26,16 @@ class SimpleCar {
 		var chassis = this.createChassis(position.x, position.y, l, r / 2);
 		var wheelA = this.createWheel(position.x - l / 2, position.y, r, imageAsset.id);
 		var wheelB = this.createWheel(position.x + l / 2, position.y, r, imageAsset.id);
-		var jointA = this.createRevoluteJoint(chassis, wheelA);
-		var jointB = this.createRevoluteJoint(chassis, wheelB);
+		var wheelJointA = this.createRevoluteJoint(chassis, wheelA);
+		var wheelJointB = this.createRevoluteJoint(chassis, wheelB);
 
 		chassis.name = "chassis";
 		wheelA.name = "wheelA";
 		wheelB.name = "wheelB";
-		jointA.name = "jointA";
-		jointB.name = "jointB";
+		wheelJointA.name = "wheelJointA";
+		wheelJointB.name = "wheelJointB";
 
-		scene.addChildren([chassis, wheelA, wheelB, jointA, jointB]);
+		scene.addChildren([chassis, wheelA, wheelB, wheelJointA, wheelJointB]);
 
 		wheelA.autoAdjustFillTexture();
 		wheelB.autoAdjustFillTexture();
@@ -52,7 +52,7 @@ class SimpleCar {
 	createWheel(x, y, r, fillTexture) {
 		var wheel = new physion.CircleNode(r);
 		wheel.initNode(x, y);
-		wheel.friction = 0.8;
+		wheel.friction = 0.9;
 		wheel.lineWidth = 0;
 		wheel.fillTexture = fillTexture;
 		return wheel;
