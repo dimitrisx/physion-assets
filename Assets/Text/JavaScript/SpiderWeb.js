@@ -41,7 +41,7 @@ class SpiderWeb {
 				circles[layer][i] = circle;
 
 				if (layer == (layerCount - 1)) {
-					const joint = new physion.RevoluteJointNode(circle.id, "", circle.getPosition());
+					const joint = new physion.RevoluteJointNode(circle.id, "", undefined, circle.getPosition());
 					joint.fillColor = 0;
 					scene.addChild(joint);
 				}
@@ -58,8 +58,9 @@ class SpiderWeb {
 
 				const c1 = circles[layer][a];
 				const c2 = circles[layer][b]
+				const distance = physion.utils.calculateDistance(c1.getPosition(), c2.getPosition());
 
-				const joint = new physion.DistanceJointNode(c1.id, c2.id, c1.getPosition(), c2.getPosition());
+				const joint = new physion.DistanceJointNode(c1.id, c2.id, undefined, undefined, distance);
 				joint.lineColor = this.#getColor(layer);
 				scene.addChild(joint);
 			}
@@ -72,8 +73,9 @@ class SpiderWeb {
 
 				const c1 = circles[a][i];
 				const c2 = circles[b][i];
+				const distance = physion.utils.calculateDistance(c1.getPosition(), c2.getPosition());
 
-				const joint = new physion.DistanceJointNode(c1.id, c2.id, c1.getPosition(), c2.getPosition());
+				const joint = new physion.DistanceJointNode(c1.id, c2.id, undefined, undefined, distance);
 				joint.lineColor = this.#getColor(layer);
 				scene.addChild(joint);
 			}
