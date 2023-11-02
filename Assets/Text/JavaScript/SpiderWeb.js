@@ -11,7 +11,8 @@ class SpiderWeb {
 
 	async create(scene, position) {
 
-		await physion.root.scriptLoader.loadD3ScaleChromatic();
+		const tinygradient = (await physion.utils.importTinyGradient()).default;
+		this.gradient = tinygradient(["red", "orange"]);
 
 		const layerCount = this.layerCount;
 		const circlesPerLayer = this.circlesPerLayer;
@@ -35,7 +36,7 @@ class SpiderWeb {
 				circle.fixedRotation = true;
 				circle.drawLine = false;
 				circle.lineWidth = 0;
-				circle.fillColor = this.#getColor(layer);
+				circle.fillColor = this.getColor(layer);
 				scene.addChild(circle);
 
 				circles[layer][i] = circle;
@@ -61,7 +62,7 @@ class SpiderWeb {
 				const distance = physion.utils.calculateDistance(c1.getPosition(), c2.getPosition());
 
 				const joint = new physion.DistanceJointNode(c1.id, c2.id, undefined, undefined, distance);
-				joint.lineColor = this.#getColor(layer);
+				joint.lineColor = this.getColor(layer);
 				scene.addChild(joint);
 			}
 		}
@@ -76,20 +77,16 @@ class SpiderWeb {
 				const distance = physion.utils.calculateDistance(c1.getPosition(), c2.getPosition());
 
 				const joint = new physion.DistanceJointNode(c1.id, c2.id, undefined, undefined, distance);
-				joint.lineColor = this.#getColor(layer);
+				joint.lineColor = this.getColor(layer);
 				scene.addChild(joint);
 			}
 		}
 	}
 
 
-	#getColor(layer) {
-		if (typeof d3 !== "undefined") {
-			const t = (layer + 1) / this.layerCount;
-			const d3Color = d3.color(d3.interpolatePlasma(t));
-			return physion.pixiUtils.string2hex(d3Color.hex());
-		} else {
-			return physion.utils.randomColor();
-		}
-	};
+	getColor(layer) {
+		var t = Math.min((layer + 1) / this.layerCount, 1);
+		var tinyColor = this.gradient.rgbAt(t);
+		return physion.utils.fromTinyColor(tinyColor);
+	}
 }

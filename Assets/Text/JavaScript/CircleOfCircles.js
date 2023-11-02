@@ -13,7 +13,8 @@ class CircleOfCircles {
 
 		position = position || { x: 0, y: 0 };
 
-		await physion.root.scriptLoader.loadD3ScaleChromatic();
+		const tinygradient = (await physion.utils.importTinyGradient()).default;
+		this.gradient = tinygradient(["red", "orange"]);
 
 		this.scene = scene;
 
@@ -41,14 +42,10 @@ class CircleOfCircles {
 	}
 
 	getColor(x, y) {
-		if (typeof d3 !== "undefined") {
-			var d = Math.sqrt(x * x + y * y);
-			var t = d / this.radius;
-			var d3Color = d3.color(d3.interpolateSpectral(t));
-			return physion.pixiUtils.string2hex(d3Color.hex());
-		} else {
-			return physion.utils.randomColor();
-		}
+		var d = Math.sqrt(x * x + y * y);
+		var t = Math.min(d / this.radius, 1);
+		var tinyColor = this.gradient.rgbAt(t);
+		return physion.utils.fromTinyColor(tinyColor);
 	}
 
 }
