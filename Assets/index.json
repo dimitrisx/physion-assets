@@ -362,6 +362,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/BreakableJoint.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/Bumper.js",
 		"mime": "text/javascript",
 		"tags": [
