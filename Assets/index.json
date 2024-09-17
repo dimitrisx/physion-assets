@@ -425,6 +425,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/Thruster.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/Tracer.js",
 		"mime": "text/javascript",
 		"tags": [
