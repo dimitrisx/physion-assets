@@ -21,6 +21,9 @@ class SimpleCarController {
 				this.wheelA = scene.findChildByName("wheelJointA");
 				this.wheelB = scene.findChildByName("wheelJointB");
 				this.initialized = this.wheelA && this.wheelB;
+
+				if (this.wheelA) this.wheelA.motorEnabled = true;
+				if (this.wheelB) this.wheelA.motorEnabled = true;
 			}
 		}
 
