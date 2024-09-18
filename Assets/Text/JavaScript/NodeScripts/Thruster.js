@@ -23,7 +23,7 @@ class Thruster {
         // Particles configuration
         this.particles = true; // Particle toggling (All other particle settings are useless if this is off)
         this.particleSpawnRadius = 0.75; // Particle spawn radius around center point (Max. distance from thruster's center point to spawn particles), unit = meters
-        this.particleSize = 0.5; // Particle size (Width and height), unit = meters
+        this.particleSize = 0.25; // Particle size factor
         this.particleFrequency = 1 / 120; // Particle spawn frequency* (NOTE! Higher = less frequent!), unit = seconds
         this.particleLife = 1; // Particle lifetime, unit = seconds
         this.particleSpread = Math.PI / 4; // Particle flame spread, unit = radians (180 degrees = PI radians)
@@ -61,7 +61,7 @@ class Thruster {
 
             if (km.isPressed(this.keybind)) { // Key is pressed
                 // Apply force
-                const direction = this.node.angle * (Math.PI / 180), force = this.force * this.node.body.GetMass();
+                const direction = this.node.angle * (Math.PI / 180) + Math.PI / 2, force = this.force * this.node.body.GetMass();
                 this.node.applyForce({
                     x: Math.cos(direction) * force,
                     y: Math.sin(direction) * force
@@ -71,7 +71,9 @@ class Thruster {
                 if (this.particles) {
                     this.counter += this.scene.timeStep;
                     while (this.counter >= this.particleFrequency) { // Lower timestep means slower spawning
-                        const particle = new physion.RectangleNode(this.particleSize, this.particleSize),
+                        const rect = this.node.getBoundingRect(),
+                            size = Math.max(rect.width, rect.height) * this.particleSize,
+                            particle = new physion.RectangleNode(size, size),
                             radius = Math.sqrt(Math.random()) * this.particleSpawnRadius,
                             theta = Math.random() * 2 * Math.PI,
                             flameDirection = direction + Math.PI + Math.random() * this.particleSpread - this.particleSpread / 2;
