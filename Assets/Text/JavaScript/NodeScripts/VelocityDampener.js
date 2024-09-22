@@ -1,7 +1,7 @@
 /**
  * Dampens the velocity components of a BodyNode.
  * 
- * Script by Aiden Ravenshea.
+ * Script written by Aiden Ravenshea.
  */
 class VelocityDampener {
 
