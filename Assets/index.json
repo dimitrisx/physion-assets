@@ -439,6 +439,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/VelocityDampener.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/Pyramid.js",
 		"mime": "text/javascript"
 	},
