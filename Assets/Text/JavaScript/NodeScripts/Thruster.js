@@ -22,11 +22,10 @@ class Thruster {
         
         // Particles configuration
         this.particles = true; // Particle toggling (All other particle settings are useless if this is off)
-        this.particleSpawnRadius = 0.75; // Particle spawn radius around center point (Max. distance from thruster's center point to spawn particles), unit = meters
-        this.particleSize = 0.5; // Particle size (Width and height), unit = meters
+        this.particleSize = 0.5; // Particle size factor
         this.particleFrequency = 1 / 120; // Particle spawn frequency* (NOTE! Higher = less frequent!), unit = seconds
         this.particleLife = 1; // Particle lifetime, unit = seconds
-        this.particleSpread = Math.PI / 4; // Particle flame spread, unit = radians (180 degrees = PI radians)
+        this.particleSpread = Math.PI / 8; // Particle flame spread, unit = radians (180 degrees = PI radians)
         this.particleLifeSpread = 0.5; // Particle lifetime spread, unit = seconds
         this.particleMovementFactor = 0.1; // Particle movement multiplier (Controls how much the particles move)
 
@@ -61,7 +60,7 @@ class Thruster {
 
             if (km.isPressed(this.keybind)) { // Key is pressed
                 // Apply force
-                const direction = this.node.angle * (Math.PI / 180), force = this.force * this.node.body.GetMass();
+                const direction = this.node.angle * (Math.PI / 180) + Math.PI / 2, force = this.force * this.node.body.GetMass();
                 this.node.applyForce({
                     x: Math.cos(direction) * force,
                     y: Math.sin(direction) * force
@@ -71,17 +70,21 @@ class Thruster {
                 if (this.particles) {
                     this.counter += this.scene.timeStep;
                     while (this.counter >= this.particleFrequency) { // Lower timestep means slower spawning
-                        const particle = new physion.RectangleNode(this.particleSize, this.particleSize),
-                            radius = Math.sqrt(Math.random()) * this.particleSpawnRadius,
-                            theta = Math.random() * 2 * Math.PI,
-                            flameDirection = direction + Math.PI + Math.random() * this.particleSpread - this.particleSpread / 2;
+                        const rect = this.node.getBoundingRect(),
+                            size = Math.min(rect.width, rect.height) * this.particleSize,
+                            particle = new physion.RectangleNode(size, size),
+                            flameDirection = direction + Math.PI + Math.random() * this.particleSpread - this.particleSpread / 2,
+                            pos = this.rotate({x: Math.random() * rect.width - rect.width / 2, y: Math.random() * rect.height - rect.height / 2}, this.node.angle * (Math.PI / 180));
+                        
                         particle.life = this.particleLife + Math.random() * this.particleLifeSpread - this.particleLifeSpread / 2;
-                        particle.x = Math.cos(theta) * radius + this.node.x;
-                        particle.y = Math.sin(theta) * radius + this.node.y;
+                        particle.x = pos.x + this.node.x;
+                        particle.y = pos.y + this.node.y;
                         particle.angle = Math.random() * 360;
+
                         particle.linearVelocityX = Math.cos(flameDirection) * force * this.particleMovementFactor + this.node.linearVelocityX;
                         particle.linearVelocityY = Math.sin(flameDirection) * force * this.particleMovementFactor + this.node.linearVelocityY;
                         particle.angularVelocity = Math.random() * force * this.particleMovementFactor - force * this.particleMovementFactor / 2 + this.node.angularVelocity;
+                        
                         particle.fillColor = this.particleColor;
                         particle.lineAlpha = 0;
                         particle.filterCategoryBits = 0;
@@ -94,5 +97,11 @@ class Thruster {
                 }
             }
         }
+    }
+
+    // Rotate a point around the origin
+    rotate(p, a) {
+        const cos = Math.cos(a), sin = Math.sin(a);
+        return {x: p.x * cos - p.y * sin, y: p.x * sin + p.y * cos};
     }
 }
