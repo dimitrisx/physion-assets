@@ -453,5 +453,9 @@
 	{
 		"path": "Assets/Text/JavaScript/SquareGrid.js",
 		"mime": "text/javascript"
+	},
+	{
+		"path": "Assets/Text/JavaScript/TerrainGenerator.js",
+		"mime": "text/javascript"
 	}
 ]
