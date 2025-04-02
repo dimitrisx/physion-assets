@@ -14,13 +14,13 @@ class TerrainGenerator {
 	static PD_octaves = { path: "octaves", defaultValue: 3, min: 1, max: 8, step: 1 };
 	static PD_persistence = { path: "persistence", defaultValue: 0.5, min: 0, max: 0.8, step: 0.1 };
 
-	constructor(width = 320, segments = 160, amplitude = 5, frequency = 0.05, octaves = 3, persistence = 0.5) {
-		this.width = width;
-		this.segments = segments;
-		this.amplitude = amplitude;
-		this.frequency = frequency;
-		this.octaves = octaves;
-		this.persistence = persistence;
+	constructor(width, segments, amplitude, frequency, octaves, persistence) {
+		this.width = width !== undefined ? width : 320;
+		this.segments = segments !== undefined ? segments : 160;
+		this.amplitude = amplitude !== undefined ? amplitude: 5;
+		this.frequency = frequency !== undefined ? frequency : 0.05;
+		this.octaves = octaves !== undefined ? octaves : 3;
+		this.persistence = persistence !== undefined ? persistence: 0.5
 
 		this._seed = Math.floor(Math.random() * 1000);
 	}
@@ -34,8 +34,10 @@ class TerrainGenerator {
 		points.push({ x: this.width, y: 0 });
 		points.push({ x: 0, y: 0 });
 
+		const res = physion.utils.PolygonHelper.processPolygon(points, { clean: true });
+
 		// Use PolygonNode to create the terrain
-		const terrain = new physion.PolygonNode([points]);
+		const terrain = new physion.PolygonNode([res.polygon]);
 		terrain.setPosition(position);
 		terrain.bodyType = "static";
 		terrain.fillColor = 0xADAD99;
@@ -97,4 +99,3 @@ class TerrainGenerator {
 		return points;
 	}
 }
-
