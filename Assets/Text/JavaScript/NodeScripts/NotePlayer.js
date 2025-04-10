@@ -1,21 +1,37 @@
 /**
- * This NodeScript will play a note when another object collides with it.
- * The note that is going to be played is defined by the other object's `userData.note` property.
- * The note can either be a frequency in hertz (like 440) or as “pitch-octave” notation (like "D#2").
- * If the note property is not defined then nothing happens.
- * The duration property (defined in the constructor) can either be in seconds, or as a tempo-relative value.
+ * NotePlayer is a NodeScript component that plays a musical note when another object 
+ * collides with it. 
+ * 
+ * Behavior:
+ * - When another object begins contact with this node, a musical note is triggered.
+ * - The note is read from the colliding object's `userData.note` property, if defined.
+ *   - The note can be given as a frequency in hertz (e.g., 440) or as pitch-octave notation (e.g., "D#2").
+ *   - If not provided, a default note ("C4") is used instead.
+ * - The duration the note plays is determined by the duration property, which can be:
+ *   - A value in seconds (e.g., "0.5")
+ *   - A tempo-relative musical value (e.g., "8n", "16n")
+ * 
+ * Configuration:
+ * - synthPreset: Defines the sound used for playback. Defaults to "Kalimba".
+ *   Available presets include:
+ *     Sawtooth, ElectricHarpsicord, Marimba, DigitalChime, Cello, Kalimba,
+ *     Thinsaws, Pluck, Bah, BassGuitar, BrassCircuit, Pianoetta
+ * - note: The fallback note to play if the other object doesn't specify one.
+ * - duration: The amount of time the note is played.
+ * 
  */
 class NotePlayer {
 
 	constructor(node) {
 		this.node = node;
 		this.initialized = false;
+		this.synthPreset = "Kalimba";
+		this.note = "C4";
 		this.duration = "16n";
 	}
 
 	async initialize() {
-		const Tone = await physion.utils.importTone();
-		this.synth = new Tone.PolySynth(Tone.Synth).toDestination();
+		this.synth = await physion.utils.createSynth(this.synthPreset);
 	}
 
 	update(delta) {
@@ -27,10 +43,8 @@ class NotePlayer {
 
 	onBeginContact(bodyNode, contact) {
 		if (this.synth && contact.IsTouching()) {
-			const note = bodyNode.userData.note;
-			if (note) {
-				this.synth.triggerAttackRelease(note, this.duration);
-			}
+			const note = bodyNode.userData.note || this.note;
+			this.synth.triggerAttackRelease(note, this.duration);
 		}
 	}
 }
