@@ -37,11 +37,8 @@ class SimpleCar {
 
 		scene.addChildren([chassis, wheelA, wheelB, wheelJointA, wheelJointB]);
 
-		// TODO: This needs to be fixed...
-		setTimeout(() => {
-			wheelA.autoAdjustFillTexture();
-			wheelB.autoAdjustFillTexture();	
-		}, 100);
+		wheelA.autoAdjustFillTexture();
+		wheelB.autoAdjustFillTexture();
 	}
 
 	createChassis(x, y, w, h) {
