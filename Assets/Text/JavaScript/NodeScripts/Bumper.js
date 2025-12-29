@@ -1,24 +1,47 @@
 /**
- * Applies vertical impulses to all bodies that gets in contact with 
+ * Bumper behavior that applies impulses to colliding objects.
+ * Attach this script to body nodes in the scene to convert them into bumpers.
  */
 class Bumper {
 
 	constructor(node) {
 		this.node = node;
-		this.inContactWith = new Set();
-		this.power = 10;
+		this.impulses = new Map(); // Store BodyNode -> Impulse Direction
+
+		// Use Node's `userData` property to configure the bumper's behavior instead of directly 
+		// modifying the values below.
+		const d = node.userData;
+		this.power = d.bumperPower || 5; 									// The power/strength of the bumper impulse
+		this.massProportional = d.bumperMassProportional || true;	// If true, heavier objects receive proportionally stronger impulses
 	}
 
 	update(delta) {
-		for (let bodyNode of this.inContactWith) {
-			bodyNode.applyLinearImpulse({ x: 0, y: this.power * bodyNode.body.GetMass() });
+		for (let [bodyNode, impulseDir] of this.impulses) {
+			const mass = this.massProportional ? bodyNode.body.GetMass() : 1;
+			const impulseMagnitude = mass * this.power;
+
+			bodyNode.applyLinearImpulse({
+				x: impulseDir.x * impulseMagnitude,
+				y: impulseDir.y * impulseMagnitude
+			});
 		}
-		this.inContactWith.clear();
+		this.impulses.clear();
 	}
 
 	onBeginContact(bodyNode, contact) {
 		if (contact.IsTouching()) {
-			this.inContactWith.add(bodyNode);
+			const worldManifold = physion.utils.getContactWorldManifold(contact);
+			const worldNormal = worldManifold.normal;
+
+			let direction = { x: worldNormal.x, y: worldNormal.y };
+
+			if (contact.GetFixtureB().GetBody() === this.node.body) {
+				// Bumper is fixture B, reverse the normal
+				direction.x = -direction.x;
+				direction.y = -direction.y;
+			}
+
+			this.impulses.set(bodyNode, direction);
 		}
 	}
 }
