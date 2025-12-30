@@ -2,8 +2,7 @@
  * This script can be added to a Node to make it behave like a button.
  * 
  * When the button is hovered, its fill opacity (fillAlpha) will change.
- * The default behavior is to toggle the simulation, but custom logic can be 
- * implemented in the "pointertap" handler.
+ * The default "onClick" behavior is empty (do nothing). 
  * 
  * Important: This script uses the node's container (node.container) to listen for pointer
  * events and this behavior might change in future versions.
@@ -42,18 +41,6 @@ class SimpleButton {
 	}
 
 	onPointerTap() {
-		// NOTE: The following is just a sample implementation that toggles the simulation.
-		// You can safely remove all the contents of this method and provide your own implementation.
-
-		const root = physion.root;
-		if (root.isRunning()) {
-			root.stopScene();
-		} else {
-			root.startScene();
-		}
-
-		if ("text" in this.node) {
-			this.node.text = root.isRunning() ? "Stop" : "Start";
-		}
+		// Implement your custom "onClick" logic here
 	}
 }
