@@ -7,18 +7,18 @@ class Bumper {
 	constructor(node) {
 		this.node = node;
 		this.impulses = new Map(); // Store BodyNode -> Impulse Direction
-
-		// Use Node's `userData` property to configure the bumper's behavior instead of directly 
-		// modifying the values below.
-		const d = node.userData;
-		this.power = d.bumperPower || 5; 									// The power/strength of the bumper impulse
-		this.massProportional = d.bumperMassProportional || true;	// If true, heavier objects receive proportionally stronger impulses
 	}
 
 	update(delta) {
+		// Use Node's `userData` property to configure the bumper's behavior instead of directly 
+		// modifying the values below.		
+		const d = this.node.userData;
+		const massProportional = d.bumperMassProportional || true;
+		const power = d.bumperPower || 5;
+
 		for (let [bodyNode, impulseDir] of this.impulses) {
-			const mass = this.massProportional ? bodyNode.body.GetMass() : 1;
-			const impulseMagnitude = mass * this.power;
+			const mass = massProportional ? bodyNode.body.GetMass() : 1;
+			const impulseMagnitude = mass * power;
 
 			bodyNode.applyLinearImpulse({
 				x: impulseDir.x * impulseMagnitude,
