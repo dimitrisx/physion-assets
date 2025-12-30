@@ -418,6 +418,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/SimpleButton.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/SimpleCarController.js",
 		"mime": "text/javascript",
 		"tags": [
