@@ -404,6 +404,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/KeyboardMovement.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/NotePlayer.js",
 		"mime": "text/javascript",
 		"tags": [
