@@ -43,7 +43,7 @@ class KeyboardMovement {
 	}
 
 	update(delta) {
-		if (this.node.bodyType !== "dynamic") {
+		if (this.node?.bodyType !== "dynamic") {
 			return;
 		}
 
