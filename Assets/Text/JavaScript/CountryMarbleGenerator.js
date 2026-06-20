@@ -1,6 +1,6 @@
 /**
  * Creates country marbles
- * Uses https://restcountries.com/ for getting the list of countries (for a given region) 
+ * Uses https://www.apicountries.com/ for getting the list of countries (for a given region)
  * and https://github.com/HatScripts/circle-flags to get the SVG for each country flag.
  */
 class CountryMarbleGenerator {
@@ -56,7 +56,7 @@ class CountryMarbleGenerator {
 		position = position || { x: 0, y: 0 };
 
 		// Fetch country data
-		const response = await fetch("https://restcountries.com/v3.1/region/" + this.region);
+		const response = await fetch("https://www.apicountries.com/region/" + this.region);
 		const countries = await response.json();
 
 		// Define some helper variables
@@ -88,16 +88,16 @@ class CountryMarbleGenerator {
 	}
 
 	async createCountryMarble(scene, country, x, y, r) {
-		const flagUrl = "https://hatscripts.github.io/circle-flags/flags/" + country.cca2.toLocaleLowerCase() + ".svg";
+		const flagUrl = "https://hatscripts.github.io/circle-flags/flags/" + country.alpha2Code.toLocaleLowerCase() + ".svg";
 		await physion.utils.preloadTexture(flagUrl);
 
 		const imageAsset = new physion.ImageAsset(flagUrl);
-		imageAsset.name = country.name.common;
+		imageAsset.name = country.name;
 		scene.assetsLibrary.addAsset(imageAsset);
 
 		const marble = new physion.CircleNode(r);
 		marble.initNode(x, y);
-		marble.name = country.name.common;
+		marble.name = country.name;
 		marble.friction = this.marbleFriction;
 		marble.restitution = this.marbleRestitution;
 		marble.drawLine = false;
