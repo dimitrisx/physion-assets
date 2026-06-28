@@ -1,18 +1,19 @@
 /**
- * Pulls every other body in the scene toward this node, like a localized gravity well. The pull
- * is strongest up close and weakens the farther away a body is.
+ * Pulls or pushes every other body in the scene toward or away from this node, depending on the
+ * sign of `power`: positive values attract bodies (like a localized gravity well), negative
+ * values repel them. The effect is strongest up close and weakens with distance.
  *
  * Parameters:
- * - power: How strong the pull is. (default: 200)
+ * - power: How strong the pull (positive) or push (negative) is. (default: 200)
  */
-class Attractor {
+class ForceField {
 
-	static PD_power = { path: "power", defaultValue: 200, min: 0, step: 100 };
+	static PD_power = { path: "power", defaultValue: 200, step: 100 };
 
 	constructor(node) {
 		this.node = node;
 		this.scene = undefined;
-		this.power = Attractor.PD_power.defaultValue;
+		this.power = ForceField.PD_power.defaultValue;
 	}
 
 	update(delta) {
