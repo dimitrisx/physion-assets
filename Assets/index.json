@@ -355,13 +355,6 @@
 		"mime": "text/javascript"
 	},
 	{
-		"path": "Assets/Text/JavaScript/NodeScripts/Attractor.js",
-		"mime": "text/javascript",
-		"tags": [
-			"NodeScript"
-		]
-	},
-	{
 		"path": "Assets/Text/JavaScript/NodeScripts/BreakableJoint.js",
 		"mime": "text/javascript",
 		"tags": [
@@ -384,6 +377,13 @@
 	},
 	{
 		"path": "Assets/Text/JavaScript/NodeScripts/Destroyer.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
+		"path": "Assets/Text/JavaScript/NodeScripts/ForceField.js",
 		"mime": "text/javascript",
 		"tags": [
 			"NodeScript"
