@@ -4,7 +4,7 @@
  * Parameters:
  * - power: How strong the bounce is. (default: 5)
  * - massProportional: Whether heavier bodies get bounced away with more force. (default: true)
- * - dimOnContact: When enabled, the bumper's alpha is halved on each contact, then gradually
+ * - dimOnContact: When enabled, the bumper's alpha drops to 0.5 on contact, then gradually
  *   fades back to full opacity while no contacts are pending. (default: false)
  */
 class Bumper {
