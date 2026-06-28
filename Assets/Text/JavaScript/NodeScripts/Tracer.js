@@ -1,14 +1,22 @@
 /**
- * Script to trace and draw the trajectory of a Node
+ * Draws a fading trail of dots behind a node as it moves, tracing its recent path.
+ *
+ * Parameters:
+ * - maxTrajectorySize: How many points are kept in the trail before the oldest ones disappear.
+ *   (default: 100)
+ * - tracerRadius: The radius of each dot in the trail. (default: 0.1)
  */
 class Tracer {
+
+	static PD_maxTrajectorySize = { path: "maxTrajectorySize", defaultValue: 100, min: 1, step: 1 };
+	static PD_tracerRadius = { path: "tracerRadius", defaultValue: 0.1, min: 0, step: 0.01 };
 
 	constructor(node) {
 		this.node = node;
 		this.initialized = false;
 
 		this.trajectory = [];
-		this.maxTrajectorySize = 100;
+		this.maxTrajectorySize = Tracer.PD_maxTrajectorySize.defaultValue;
 
 		if (typeof physion !== "undefined") {
 			this.graphics = physion.utils.createGraphics();
@@ -16,7 +24,7 @@ class Tracer {
 			this.fillStyle = physion.utils.createFillStyle(0xff0000);
 		}
 
-		this.tracerRadius = 0.1;
+		this.tracerRadius = Tracer.PD_tracerRadius.defaultValue;
 	}
 
 	update(delta) {

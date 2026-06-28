@@ -1,29 +1,25 @@
 /**
- * A movement controller that allows a body to be moved using arrow keys.
- * The body accelerates when keys are pressed and smoothly decelerates when released.
- * 
- * Features:
- * - Applies forces proportional to how long keys are held
- * - Automatic deceleration when no keys are pressed
- * - Normalized diagonal movement (no speed boost when moving diagonally)
- * - Mass-aware forces (stronger forces for heavier objects)
- * - Only works with dynamic bodies
- * 
- * Requirements:
- * - Must be attached to a BodyNode
- * - Body should have gravityScale set to 0 for floating behavior
- * - Body type must be "dynamic" 
- * 
- * Script behavior can be customized via Node's userData:
- * 
- * // Example:
- * bodyNode.userData.KeyboardMovement = {
- *   maxForce: 30,        // Higher = faster acceleration
- *   deceleration: 0.95,  // Lower = slower deceleration (0.9 = very floaty, 0.99 = quick stop)
- *   deadZone: 0.2        // Velocity threshold to fully stop
- * };
+ * Lets the player move a body with the arrow keys, accelerating while a key is held and
+ * coasting smoothly to a stop when released. Diagonal movement is normalized so it isn't faster
+ * than moving straight, and heavier bodies get proportionally stronger forces.
+ *
+ * Parameters:
+ * - maxForce: How strongly the body accelerates. (default: 20)
+ * - deceleration: How quickly the body slows down when no key is pressed. Lower values feel
+ *   floatier; values closer to 1 stop almost immediately. (default: 0.98)
+ * - deadZone: The speed below which the body is snapped to a complete stop. (default: 0.1)
+ *
+ * Requirements: Must be attached to a dynamic body node. For a floating feel, set the body's
+ * gravityScale to 0.
+ *
+ * Tip: open the script and edit the `keybind` property if you want to remap the controls (e.g.
+ * to WASD).
  */
 class KeyboardMovement {
+
+	static PD_maxForce = { path: "maxForce", defaultValue: 20, min: 0, step: 1 };
+	static PD_deceleration = { path: "deceleration", defaultValue: 0.98, min: 0, max: 1, step: 0.01 };
+	static PD_deadZone = { path: "deadZone", defaultValue: 0.1, min: 0, step: 0.01 };
 
 	constructor(node) {
 		this.node = node instanceof physion.BodyNode ? node : undefined; // Check if the node is a BodyNode
@@ -32,6 +28,10 @@ class KeyboardMovement {
 			alert(message);
 			return;
 		}
+
+		this.maxForce = KeyboardMovement.PD_maxForce.defaultValue;
+		this.deceleration = KeyboardMovement.PD_deceleration.defaultValue;
+		this.deadZone = KeyboardMovement.PD_deadZone.defaultValue;
 
 		// Customize the following if you want to control the node with other keys (e.g. WASD)
 		this.keybind = {
@@ -56,8 +56,7 @@ class KeyboardMovement {
 	}
 
 	calculateForce() {
-		let maxForce = this.node.userData.KeyboardMovement?.maxForce || 20;
-		maxForce *= this.node.mass;
+		let maxForce = this.maxForce * this.node.mass;
 
 		let forceX = 0;
 		let forceY = 0;
@@ -80,8 +79,8 @@ class KeyboardMovement {
 	}
 
 	applyDeceleration() {
-		const deadZone = this.node.userData.KeyboardMovement?.deadZone || 0.1;
-		const deceleration = this.node.userData.KeyboardMovement?.deceleration || 0.98;
+		const deadZone = this.deadZone;
+		const deceleration = this.deceleration;
 
 		const velocity = this.node.getLinearVelocity();
 		const speed = Math.hypot(velocity.x, velocity.y);

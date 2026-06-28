@@ -1,15 +1,24 @@
 /**
- * Dampens the velocity components of a BodyNode.
- * 
+ * Gradually slows down a body's linear and angular velocity over time, like friction or drag.
+ *
+ * Parameters:
+ * - linearForce: How quickly linear (positional) velocity is dampened. Higher values stop the
+ *   body faster. (default: 5)
+ * - angularForce: How quickly angular (rotational) velocity is dampened. Higher values stop
+ *   rotation faster. (default: 5)
+ *
  * Script written by Aiden Ravenshea.
  */
 class VelocityDampener {
 
+    static PD_linearForce = { path: "linearForce", defaultValue: 5, min: 0, step: 0.1 }; // Linear velocity dampening force
+    static PD_angularForce = { path: "angularForce", defaultValue: 5, min: 0, step: 0.1 }; // Angular velocity dampening force
+
     // Script initializer
     constructor(node) {
         this.node = node;
-        this.linearForce = 5; // Linear velocity dampening force
-        this.angularForce = 5; // Angular velocity dampening force
+        this.linearForce = VelocityDampener.PD_linearForce.defaultValue;
+        this.angularForce = VelocityDampener.PD_angularForce.defaultValue;
         this.scene = undefined;
     }
 

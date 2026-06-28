@@ -1,24 +1,26 @@
 /**
- * Bumper behavior that applies impulses to colliding objects.
- * Attach this script to body nodes in the scene to convert them into bumpers.
+ * Turns a body into a bumper that bounces other bodies away on contact, like in pinball.
+ *
+ * Parameters:
+ * - power: How strong the bounce is. (default: 5)
+ * - massProportional: Whether heavier bodies get bounced away with more force. (default: true)
  */
 class Bumper {
 
+	static PD_power = { path: "power", defaultValue: 5, min: 0, step: 1 };
+	static PD_massProportional = { path: "massProportional", defaultValue: true };
+
 	constructor(node) {
 		this.node = node;
+		this.power = Bumper.PD_power.defaultValue;
+		this.massProportional = Bumper.PD_massProportional.defaultValue;
 		this.impulses = new Map(); // Store BodyNode -> Impulse Direction
 	}
 
 	update(delta) {
-		// Use Node's `userData` property to configure the bumper's behavior instead of directly 
-		// modifying the values below.		
-		const d = this.node.userData;
-		const massProportional = d.bumperMassProportional || true;
-		const power = d.bumperPower || 5;
-
 		for (let [bodyNode, impulseDir] of this.impulses) {
-			const mass = massProportional ? bodyNode.body.GetMass() : 1;
-			const impulseMagnitude = mass * power;
+			const mass = this.massProportional ? bodyNode.body.GetMass() : 1;
+			const impulseMagnitude = mass * this.power;
 
 			bodyNode.applyLinearImpulse({
 				x: impulseDir.x * impulseMagnitude,

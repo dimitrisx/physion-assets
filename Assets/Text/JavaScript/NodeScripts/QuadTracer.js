@@ -1,4 +1,14 @@
+/**
+ * Draws a fading ribbon trail behind a node as it moves, made of connected solid segments.
+ *
+ * Parameters:
+ * - maxTrajectorySize: How many trail segments are kept before the oldest ones disappear.
+ *   (default: 20)
+ */
 class QuadTracer {
+
+    static PD_maxTrajectorySize = { path: "maxTrajectorySize", defaultValue: 20, min: 1, step: 1 };
+
     constructor(node) {
         this.node = node;
 
@@ -7,7 +17,7 @@ class QuadTracer {
         this.trajectory = [];
         this.lastPosition = undefined;
 
-        this.maxTrajectorySize = 20;
+        this.maxTrajectorySize = QuadTracer.PD_maxTrajectorySize.defaultValue;
         this.graphics = physion.utils.createGraphics();
         this.lineStyle = physion.utils.createLineStyle(0);
         this.fillStyle = physion.utils.createFillStyle(node.fillColor || 0);

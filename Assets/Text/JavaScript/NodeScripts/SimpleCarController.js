@@ -1,16 +1,25 @@
 /**
- * A script that can be used to control the two wheel joints of a simple car.
- * This script expects that the scene contains two RevoluteJointNodes named wheelJointA and
- * wheelJointB.
+ * Drives a simple two-wheeled car using the left/right arrow keys to accelerate and the down
+ * arrow key to brake.
+ *
+ * Parameters:
+ * - maxSpeed: The car's top speed. (default: 10)
+ * - acceleration: How quickly the car speeds up, slows down, and brakes. (default: 0.1)
+ *
+ * Requirements: The scene must contain two revolute joint nodes named "wheelJointA" and
+ * "wheelJointB".
  */
 class SimpleCarController {
+
+	static PD_maxSpeed = { path: "maxSpeed", defaultValue: 10, min: 0, step: 1 };
+	static PD_acceleration = { path: "acceleration", defaultValue: 0.1, min: 0, step: 0.01 };
 
 	constructor(node) {
 		this.node = node;
 		this.motorSpeed = 0;
 		this.initialized = false;
-		this.maxSpeed = 10;
-		this.acceleration = 0.1;
+		this.maxSpeed = SimpleCarController.PD_maxSpeed.defaultValue;
+		this.acceleration = SimpleCarController.PD_acceleration.defaultValue;
 	}
 
 	update(delta) {

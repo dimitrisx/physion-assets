@@ -1,5 +1,5 @@
 /**
- * Reverses the gravityScale property of objects that collide with it.
+ * Reverses the direction of gravity for any body that touches this node.
  */
 class GravityPad {
 

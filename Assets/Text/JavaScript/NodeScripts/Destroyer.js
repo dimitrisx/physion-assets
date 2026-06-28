@@ -1,5 +1,5 @@
 /**
- * Destroys BodyNodes that get in contact with it
+ * Destroys any body that touches this node, fading it out before removing it from the scene.
  */
  class Destroyer {
 

@@ -1,10 +1,9 @@
 /**
- * A reusable button component that can be attached to any Node to add interactive button behavior.
- * 
- * The default behavior changes the Node's alpha on hover (0.8 normal, 1.0 hovered) and shows
- * a pointer cursor. 
- * 
- * You can customize this script by modifying the onPointer* methods below.
+ * Turns a node into a clickable button. By default it becomes semi-transparent normally and
+ * fully opaque while hovered, with a pointer cursor to signal it's interactive.
+ *
+ * This script has no UI-exposed parameters; open the script and edit the onPointer* methods to
+ * customize the hover and click behavior.
  */
 class SimpleButton {
 
