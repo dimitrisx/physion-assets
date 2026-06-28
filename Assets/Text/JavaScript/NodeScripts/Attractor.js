@@ -3,11 +3,11 @@
  * is strongest up close and weakens the farther away a body is.
  *
  * Parameters:
- * - power: How strong the pull is. (default: 2)
+ * - power: How strong the pull is. (default: 200)
  */
 class Attractor {
 
-	static PD_power = { path: "power", defaultValue: 2, min: 0, step: 0.1 };
+	static PD_power = { path: "power", defaultValue: 200, min: 0, step: 100 };
 
 	constructor(node) {
 		this.node = node;
