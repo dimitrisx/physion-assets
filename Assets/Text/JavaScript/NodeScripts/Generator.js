@@ -10,7 +10,7 @@
  */
 class Generator {
 
-	static PD_frequency = { path: "frequency", defaultValue: 180, min: 30, step: 10 };
+	static PD_frequency = { path: "frequency", defaultValue: 180, min: 10, step: 10 };
 
 	constructor(node) {
 		this.node = node;
