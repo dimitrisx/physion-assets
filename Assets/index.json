@@ -418,6 +418,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/PropertyAnimator.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/QuadTracer.js",
 		"mime": "text/javascript",
 		"tags": [
