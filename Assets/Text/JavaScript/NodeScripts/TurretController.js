@@ -1,3 +1,26 @@
+/**
+ * Turns a CircleNode into a mouse-aimed turret: a cannon barrel is drawn on top of the node and
+ * rotates to track the pointer every frame, and holding the trigger mouse button fires bullets
+ * from the barrel's tip at a fixed rate. Each shot can play a synthesized gunshot sound and kick
+ * the barrel back with a short recoil animation.
+ *
+ * The barrel's size follows the node's radius and its color follows the node's fillColor, so the
+ * turret can be restyled by editing the node itself.
+ *
+ * Parameters:
+ * - bulletShape: The shape of spawned bullets, Circle or Capsule. (default: "Capsule")
+ * - bulletProps: Properties applied to each spawned bullet node, such as ttl, fillColor and
+ *   density. (default: brass-colored bullets that expire after 2 seconds)
+ * - bulletVelocity: Initial speed of spawned bullets, in meters per second. (default: 50)
+ * - bulletTrail: Attaches a particle trail to each bullet. (default: true)
+ * - bulletSprite: Renders bullets with a bullet image instead of a plain shape. (default: false)
+ * - soundEnabled: Plays a synthesized gunshot sound on every shot. (default: true)
+ * - cooldownMs: The minimum time between shots, in milliseconds. (default: 100)
+ * - recoilEnabled: Kicks the barrel back on each shot. (default: true)
+ * - triggerButton: Which mouse button fires the turret, Left or Right. (default: "Right")
+ *
+ * Requirements: Must be attached to a CircleNode. Bullet size scales with the node's radius.
+ */
 class TurretController {
 
 	static PD_bulletShape = {
@@ -18,7 +41,7 @@ class TurretController {
 	static PD_recoilEnabled = { path: "recoilEnabled", defaultValue: true };
 	static PD_triggerButton = {
 		path: "triggerButton",
-		defaultValue: "1",
+		defaultValue: "2",
 		editor: "Select",
 		selectOptions: [
 			{ value: "1", label: "Left" },
