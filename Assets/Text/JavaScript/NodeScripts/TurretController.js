@@ -9,11 +9,12 @@ class TurretController {
 			{ value: "capsule", label: "Capsule" },
 		],
 	};
-	static PD_bulletProps = { path: "bulletProps", defaultValue: { ttl: 3000, fillColor: 0xb5a642, bullet: true, fixedRotation: false, angularDamping: 1, gravityScale: 1, friction: 0.05, restitution: 0.05, density: 3, filterGroupIndex: 0, drawLine: false }, description: "Properties applied to each spawned bullet node." };
+	static PD_bulletProps = { path: "bulletProps", defaultValue: { ttl: 2000, fillColor: 0xb5a642, bullet: true, fixedRotation: false, angularDamping: 1, gravityScale: 1, friction: 0.05, restitution: 0.05, density: 3, filterGroupIndex: 0, drawLine: false }, description: "Properties applied to each spawned bullet node." };
 	static PD_bulletVelocity = { path: "bulletVelocity", defaultValue: 50, min: 10, max: 120, step: 10, description: "Initial speed of spawned bullets, in meters per second." };
 	static PD_bulletTrail = { path: "bulletTrail", defaultValue: true, description: "Attaches a particle trail to each bullet." };
 	static PD_bulletSprite = { path: "bulletSprite", defaultValue: false, description: "Renders bullets with a bullet image instead of a plain shape." };
-	static PD_cooldownMs = { path: "cooldownMs", defaultValue: 200, min: 50, max: 500, step: 10 };
+	static PD_soundEnabled = { path: "soundEnabled", defaultValue: true };
+	static PD_cooldownMs = { path: "cooldownMs", defaultValue: 100, min: 50, max: 500, step: 10 };
 	static PD_recoilEnabled = { path: "recoilEnabled", defaultValue: true };
 	static PD_triggerButton = {
 		path: "triggerButton",
@@ -37,15 +38,17 @@ class TurretController {
 		this.bulletVelocity = TurretController.PD_bulletVelocity.defaultValue;
 		this.bulletTrail = TurretController.PD_bulletTrail.defaultValue;
 		this.bulletSprite = TurretController.PD_bulletSprite.defaultValue;
+		this.soundEnabled = TurretController.PD_soundEnabled.defaultValue;
 		this.cooldownMs = TurretController.PD_cooldownMs.defaultValue;
 		this.recoilEnabled = TurretController.PD_recoilEnabled.defaultValue;
 		this.triggerButton = TurretController.PD_triggerButton.defaultValue;
 
 		this.lastShotTime = 0;
+		this.lastSoundTime = 0;
+		this.shootSound = null;
 
 		const bulletTextureUrl = "https://res.cloudinary.com/jeronimo/image/upload/v1784715799/Testing/bullet.png";
 		physion.utils.textureFromUrl(bulletTextureUrl).then((texture) => {
-			console.log("Bullet texture loaded");
 			this.bulletTexture = texture;
 		});
 
@@ -57,10 +60,26 @@ class TurretController {
 	}
 
 	destroy() {
+		if (!this.node) {
+			return;
+		}
+
 		this.graphics.clear();
 		this.node.container.removeChild(this.graphics);
 
 		this.node.off("propertyChanged", this.onNodePropertyChanged);
+
+		if (this.shootSound) {
+			Object.values(this.shootSound).forEach((n) => n.dispose());
+		}
+	}
+
+	get soundEnabled() { return this._soundEnabled; }
+	set soundEnabled(v) {
+		this._soundEnabled = v;
+		if (v && !this.shootSound) {
+			this.initSound();
+		}
 	}
 
 	get canonLength() {
@@ -111,6 +130,10 @@ class TurretController {
 			}
 		}
 
+		if (this.soundEnabled) {
+			this.playShootSound();
+		}
+
 		if (this.recoilEnabled) {
 			this.graphics.x = -this.canonLength * 0.5;
 		}
@@ -147,7 +170,7 @@ class TurretController {
 		config.alpha = { start: 0.3, end: 0 };
 		config.speed = { start: 0, end: 0 };
 		config.scale = { start: 0.5, end: 0.1 };
-		config.color.start = physion.pixiUtils.hex2string(bullet.fillColor);
+		config.color.start = physion.utils.toHexString(bullet.fillColor);
 		config.color.end = "#000000";
 		config.startRotation = { min: 0, max: 0 };
 		config.noRotation = true;
@@ -202,4 +225,61 @@ class TurretController {
 		return this.node.toGlobal(localPos);
 	}
 
+	async initSound() {
+		try {
+			const Tone = await physion.utils.importTone();
+			await Tone.start();
+
+			const compressor = new Tone.Compressor().toDestination();
+			compressor.threshold.value = -20;
+			compressor.ratio.value = 8;
+			compressor.attack.value = 0.001;
+			compressor.release.value = 0.1;
+
+			const crackFilter = new Tone.Filter(2000, "bandpass", -12).connect(compressor);
+			const crackDistortion = new Tone.Distortion(0.8).connect(crackFilter);
+			const crackSynth = new Tone.NoiseSynth().connect(crackDistortion);
+			crackSynth.noise.type = "pink";
+			crackSynth.envelope.attack = 0.0005;
+			crackSynth.envelope.decay = 0.05;
+			crackSynth.envelope.sustain = 0;
+			crackSynth.envelope.release = 0.03;
+			crackSynth.volume.value = -6;
+
+			const thumpSynth = new Tone.MembraneSynth().connect(compressor);
+			thumpSynth.pitchDecay = 0.025;
+			thumpSynth.octaves = 3;
+			thumpSynth.envelope.attack = 0.001;
+			thumpSynth.envelope.decay = 0.07;
+			thumpSynth.envelope.sustain = 0;
+			thumpSynth.envelope.release = 0.04;
+			thumpSynth.volume.value = -7;
+
+			this.shootSound = { compressor, crackFilter, crackDistortion, crackSynth, thumpSynth };
+		} catch (err) {
+			console.error("TurretController: failed to initialize shoot sound", err);
+		}
+	}
+
+	playShootSound() {
+		if (!this.shootSound) {
+			return;
+		}
+
+		const { crackFilter, crackSynth, thumpSynth } = this.shootSound;
+
+		// When no time is passed, Tone schedules at AudioContext.currentTime, which only moves forward
+		// when the audio thread ticks. Two shots can read the same value, and retriggering a still
+		// sounding source at a time that is not strictly greater than the previous one throws.
+		const time = Math.max(crackSynth.now(), this.lastSoundTime + 0.01);
+		this.lastSoundTime = time;
+
+		crackFilter.frequency.setValueAtTime(1600 + Math.random() * 900, time);
+		crackSynth.volume.setValueAtTime(-6 + (Math.random() - 0.5) * 3, time);
+		crackSynth.triggerAttackRelease(0.045, time);
+
+		const thumpNote = 55 + Math.random() * 20;
+		thumpSynth.volume.setValueAtTime(-7 + (Math.random() - 0.5) * 2, time);
+		thumpSynth.triggerAttackRelease(thumpNote, 0.07, time);
+	}
 }

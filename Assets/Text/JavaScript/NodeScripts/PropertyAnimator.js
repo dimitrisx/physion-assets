@@ -90,7 +90,7 @@ class PropertyAnimator {
 		this.updateAnimation();
 	}
 
-	get propertyName() { return this._propertyName };
+	get propertyName() { return this._propertyName }
 	set propertyName(v) {
 
 		const isValidProperty = v in this.node;
@@ -105,7 +105,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get startValue() { return this._startValue };
+	get startValue() { return this._startValue }
 	set startValue(v) {
 		if (this._startValue !== v) {
 			this._startValue = v;
@@ -113,7 +113,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get endValue() { return this._endValue };
+	get endValue() { return this._endValue }
 	set endValue(v) {
 		if (this._endValue !== v) {
 			this._endValue = v;
@@ -121,7 +121,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get ease() { return this._ease };
+	get ease() { return this._ease }
 	set ease(v) {
 		if (this._ease !== v) {
 			this._ease = v;
@@ -129,7 +129,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get duration() { return this._duration };
+	get duration() { return this._duration }
 	set duration(v) {
 		if (this._duration !== v) {
 			this._duration = v;
@@ -137,7 +137,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get loop() { return this._loop };
+	get loop() { return this._loop }
 	set loop(v) {
 		if (this._loop !== v) {
 			this._loop = v;
@@ -145,7 +145,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get loopDelay() { return this._loopDelay };
+	get loopDelay() { return this._loopDelay }
 	set loopDelay(v) {
 		if (this._loopDelay !== v) {
 			this._loopDelay = v;
@@ -153,7 +153,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get alternate() { return this._alternate };
+	get alternate() { return this._alternate }
 	set alternate(v) {
 		if (this._alternate !== v) {
 			this._alternate = v;
@@ -161,7 +161,7 @@ class PropertyAnimator {
 		}
 	}
 
-	get reversed() { return this._reversed };
+	get reversed() { return this._reversed }
 	set reversed(v) {
 		if (this._reversed !== v) {
 			this._reversed = v;
