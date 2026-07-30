@@ -8,7 +8,7 @@
  */
 class ForceField {
 
-	static PD_power = { path: "power", defaultValue: 200, step: 100 };
+	static PD_power = { path: "power", defaultValue: 200, step: 100, description: "Strength of the force.\nPositive attracts, negative repels." };
 
 	constructor(node) {
 		this.node = node;

@@ -5,7 +5,7 @@
  */
 class PropertyAnimator {
 
-	static PD_propertyName = { path: "propertyName", defaultValue: "x" };
+	static PD_propertyName = { path: "propertyName", defaultValue: "x", description: "Name of the node property to animate, like x, y, angle or alpha." };
 	static PD_startValue = { path: "startValue", defaultValue: -4 };
 	static PD_endValue = { path: "endValue", defaultValue: 4 };
 	static PD_ease = {
@@ -56,12 +56,13 @@ class PropertyAnimator {
 			{ value: "irregular", label: "Irregular" },
 		],
 		defaultValue: "inOutQuad",
+		description: "Easing curve of the animation.",
 	};
-	static PD_duration = { path: "duration", defaultValue: 3000, step: 1000 }; // 3 seconds
+	static PD_duration = { path: "duration", defaultValue: 3000, step: 1000, description: "Animation duration, in milliseconds." };
 	static PD_loop = { path: "loop", defaultValue: true };
-	static PD_loopDelay = { path: "loopDelay", defaultValue: 0, min: 0, step: 100 };
-	static PD_alternate = { path: "alternate", defaultValue: true };
-	static PD_reversed = { path: "reversed", defaultValue: false };
+	static PD_loopDelay = { path: "loopDelay", defaultValue: 0, min: 0, step: 100, description: "Pause between loops, in milliseconds." };
+	static PD_alternate = { path: "alternate", defaultValue: true, description: "Animates back and forth, reversing direction on each loop." };
+	static PD_reversed = { path: "reversed", defaultValue: false, description: "Plays the animation in reverse, from endValue to startValue." };
 
 	constructor(node) {
 		this.node = node;

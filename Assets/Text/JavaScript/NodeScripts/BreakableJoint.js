@@ -15,8 +15,8 @@
  */
 class BreakableJoint {
 
-	static PD_forceThreshold = { path: "forceThreshold", defaultValue: 0.2, min: 0, step: 0.01 }; // A zero value means that the joint won't break by excessive force.
-	static PD_torqueThreshold = { path: "torqueThreshold", defaultValue: 0.2, min: 0, step: 0.01 }; // A zero value means that the joint won't break by excessive torque.
+	static PD_forceThreshold = { path: "forceThreshold", defaultValue: 0.2, min: 0, step: 0.01, description: "Maximum force before the joint breaks.\n0 = never breaks by force." };
+	static PD_torqueThreshold = { path: "torqueThreshold", defaultValue: 0.2, min: 0, step: 0.01, description: "Maximum torque before the joint breaks.\n0 = never breaks by torque." };
 	static PD_visualize = {
 		path: "visualize",
 		defaultValue: "force",
@@ -26,6 +26,7 @@ class BreakableJoint {
 			{ value: "torque", label: "Torque" },
 			{ value: "", label: "None" },
 		],
+		description: "Colors the joint by strain, from black (none) to red (about to break).",
 	};
 
 	constructor(node) {

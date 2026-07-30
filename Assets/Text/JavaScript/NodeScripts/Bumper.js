@@ -9,9 +9,9 @@
  */
 class Bumper {
 
-	static PD_power = { path: "power", defaultValue: 5, min: 0, step: 1 };
-	static PD_massProportional = { path: "massProportional", defaultValue: true };
-	static PD_dimOnContact = { path: "dimOnContact", defaultValue: false };
+	static PD_power = { path: "power", defaultValue: 5, min: 0, step: 1, description: "Strength of the bounce impulse." };
+	static PD_massProportional = { path: "massProportional", defaultValue: true, description: "Heavier bodies get bounced with proportionally more force." };
+	static PD_dimOnContact = { path: "dimOnContact", defaultValue: false, description: "Briefly dims the bumper on contact." };
 
 	constructor(node) {
 		this.node = node;

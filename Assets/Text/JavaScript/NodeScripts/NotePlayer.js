@@ -37,6 +37,7 @@ class NotePlayer {
 	static PD_note = {
 		path: "note",
 		defaultValue: "C4",
+		description: "Fallback note, played when the colliding object has no userData.note.",
 		editor: "Select",
 		selectOptions: (() => {
 			const pitches = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];

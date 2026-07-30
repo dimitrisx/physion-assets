@@ -7,7 +7,7 @@
  */
 class QuadTracer {
 
-    static PD_maxTrajectorySize = { path: "maxTrajectorySize", defaultValue: 20, min: 1, step: 1 };
+    static PD_maxTrajectorySize = { path: "maxTrajectorySize", defaultValue: 20, min: 1, step: 1, description: "Maximum number of segments in the trail." };
 
     constructor(node) {
         this.node = node;

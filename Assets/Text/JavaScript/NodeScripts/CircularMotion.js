@@ -11,7 +11,7 @@
 class CircularMotion {
 
 	static PD_radius = { path: "radius", defaultValue: 2, step: 0.1 };
-	static PD_speed = { path: "speed", defaultValue: 0.01, step: 0.001 };
+	static PD_speed = { path: "speed", defaultValue: 0.01, step: 0.001, description: "Angular speed, in radians per frame." };
 
 	constructor(node) {
 		this.node = node;

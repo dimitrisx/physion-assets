@@ -8,8 +8,8 @@
  */
 class Tracer {
 
-	static PD_maxTrajectorySize = { path: "maxTrajectorySize", defaultValue: 100, min: 1, step: 1 };
-	static PD_tracerRadius = { path: "tracerRadius", defaultValue: 0.1, min: 0, step: 0.01 };
+	static PD_maxTrajectorySize = { path: "maxTrajectorySize", defaultValue: 100, min: 1, step: 1, description: "Maximum number of points in the trail." };
+	static PD_tracerRadius = { path: "tracerRadius", defaultValue: 0.1, min: 0, step: 0.01, description: "Radius of each dot in the trail." };
 
 	constructor(node) {
 		this.node = node;

@@ -17,9 +17,9 @@
  */
 class KeyboardMovement {
 
-	static PD_maxForce = { path: "maxForce", defaultValue: 20, min: 0, step: 1 };
-	static PD_deceleration = { path: "deceleration", defaultValue: 0.98, min: 0, max: 1, step: 0.01 };
-	static PD_deadZone = { path: "deadZone", defaultValue: 0.1, min: 0, step: 0.01 };
+	static PD_maxForce = { path: "maxForce", defaultValue: 20, min: 0, step: 1, description: "Acceleration force, scaled by the body's mass." };
+	static PD_deceleration = { path: "deceleration", defaultValue: 0.98, min: 0, max: 1, step: 0.01, description: "Fraction of velocity kept each frame while no key is pressed.\nLower = stops faster." };
+	static PD_deadZone = { path: "deadZone", defaultValue: 0.1, min: 0, step: 0.01, description: "Speed below which the body snaps to a full stop." };
 
 	constructor(node) {
 		this.node = node instanceof physion.BodyNode ? node : undefined; // Check if the node is a BodyNode

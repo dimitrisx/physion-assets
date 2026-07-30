@@ -11,8 +11,8 @@
  */
 class VelocityDampener {
 
-    static PD_linearForce = { path: "linearForce", defaultValue: 5, min: 0, step: 0.1 }; // Linear velocity dampening force
-    static PD_angularForce = { path: "angularForce", defaultValue: 5, min: 0, step: 0.1 }; // Angular velocity dampening force
+    static PD_linearForce = { path: "linearForce", defaultValue: 5, min: 0, step: 0.1, description: "How quickly movement is slowed.\nHigher = stops faster." };
+    static PD_angularForce = { path: "angularForce", defaultValue: 5, min: 0, step: 0.1, description: "How quickly rotation is slowed.\nHigher = stops faster." };
 
     // Script initializer
     constructor(node) {

@@ -9,10 +9,10 @@ class TurretController {
 			{ value: "capsule", label: "Capsule" },
 		],
 	};
-	static PD_bulletProps = { path: "bulletProps", defaultValue: { ttl: 3000, fillColor: 0xb5a642, bullet: true, fixedRotation: false, angularDamping: 1, gravityScale: 1, friction: 0.05, restitution: 0.05, density: 3, filterGroupIndex: 0, drawLine: false } };
-	static PD_bulletVelocity = { path: "bulletVelocity", defaultValue: 50, min: 10, max: 120, step: 10 };
-	static PD_bulletTrail = { path: "bulletTrail", defaultValue: true };
-	static PD_bulletSprite = { path: "bulletSprite", defaultValue: false };
+	static PD_bulletProps = { path: "bulletProps", defaultValue: { ttl: 3000, fillColor: 0xb5a642, bullet: true, fixedRotation: false, angularDamping: 1, gravityScale: 1, friction: 0.05, restitution: 0.05, density: 3, filterGroupIndex: 0, drawLine: false }, description: "Properties applied to each spawned bullet node." };
+	static PD_bulletVelocity = { path: "bulletVelocity", defaultValue: 50, min: 10, max: 120, step: 10, description: "Initial speed of spawned bullets, in meters per second." };
+	static PD_bulletTrail = { path: "bulletTrail", defaultValue: true, description: "Attaches a particle trail to each bullet." };
+	static PD_bulletSprite = { path: "bulletSprite", defaultValue: false, description: "Renders bullets with a bullet image instead of a plain shape." };
 	static PD_cooldownMs = { path: "cooldownMs", defaultValue: 200, min: 50, max: 500, step: 10 };
 	static PD_recoilEnabled = { path: "recoilEnabled", defaultValue: true };
 	static PD_triggerButton = {

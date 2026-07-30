@@ -10,7 +10,7 @@
  */
 class Generator {
 
-	static PD_frequency = { path: "frequency", defaultValue: 180, min: 10, step: 10 };
+	static PD_frequency = { path: "frequency", defaultValue: 180, min: 10, step: 10, description: "Number of frames between spawns." };
 
 	constructor(node) {
 		this.node = node;
