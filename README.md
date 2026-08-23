@@ -2,17 +2,17 @@
 
 ## Installation
 
-Use [yarn](https://www.npmjs.com/package/yarn) to install dependencies:
+Use [pnpm](https://pnpm.io) to install dependencies:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 ## Updating Index
 
 Once new asset(s) have been added in the `Assets` directory, the [index.json](./Assets/index.json) file needs to be updated.
 
-To do that simply run `yarn updateIndex`.
+To do that simply run `pnpm updateIndex`.
 
 ## Contributing
 
