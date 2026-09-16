@@ -1,9 +1,10 @@
 /**
- * Lets the player move a body with the arrow keys, accelerating while a key is held and
+ * Lets the player move a body with the keyboard, accelerating while a key is held and
  * coasting smoothly to a stop when released. Diagonal movement is normalized so it isn't faster
  * than moving straight, and heavier bodies get proportionally stronger forces.
  *
  * Parameters:
+ * - controlScheme: Which keys drive movement, Arrow Keys or WASD. (default: "Arrow Keys")
  * - maxForce: How strongly the body accelerates. (default: 20)
  * - deceleration: How quickly the body slows down when no key is pressed. Lower values feel
  *   floatier; values closer to 1 stop almost immediately. (default: 0.98)
@@ -12,11 +13,20 @@
  * Requirements: Must be attached to a dynamic body node. For a floating feel, set the body's
  * gravityScale to 0.
  *
- * Tip: open the script and edit the `keybind` property if you want to remap the controls (e.g.
- * to WASD).
+ * Tip: for controls other than Arrow Keys/WASD, edit the `resolveKeybind` method or the
+ * `keybind` property directly in code.
  */
 class KeyboardMovement {
 
+	static PD_controlScheme = {
+		path: "controlScheme",
+		defaultValue: "arrows",
+		editor: "Select",
+		selectOptions: [
+			{ value: "arrows", label: "Arrow Keys" },
+			{ value: "wasd", label: "WASD" },
+		],
+	};
 	static PD_maxForce = { path: "maxForce", defaultValue: 20, min: 0, step: 1, description: "Acceleration force, scaled by the body's mass." };
 	static PD_deceleration = { path: "deceleration", defaultValue: 0.98, min: 0, max: 1, step: 0.01, description: "Fraction of velocity kept each frame while no key is pressed.\nLower = stops faster." };
 	static PD_deadZone = { path: "deadZone", defaultValue: 0.1, min: 0, step: 0.01, description: "Speed below which the body snaps to a full stop." };
@@ -29,17 +39,32 @@ class KeyboardMovement {
 			return;
 		}
 
+		this._controlScheme = KeyboardMovement.PD_controlScheme.defaultValue;
 		this.maxForce = KeyboardMovement.PD_maxForce.defaultValue;
 		this.deceleration = KeyboardMovement.PD_deceleration.defaultValue;
 		this.deadZone = KeyboardMovement.PD_deadZone.defaultValue;
 
-		// Customize the following if you want to control the node with other keys (e.g. WASD)
-		this.keybind = {
-			left: 37,
-			up: 38,
-			right: 39,
-			down: 40,
-		};
+		this.keybind = this.resolveKeybind(this._controlScheme);
+	}
+
+	// Parameters are assigned directly onto the running instance (the constructor doesn't
+	// re-run), so controlScheme is a getter/setter to react immediately when it's changed from
+	// the Scripts Editor.
+	get controlScheme() {
+		return this._controlScheme;
+	}
+
+	set controlScheme(value) {
+		if (this._controlScheme !== value) {
+			this._controlScheme = value;
+			this.keybind = this.resolveKeybind(value);
+		}
+	}
+
+	resolveKeybind(scheme) {
+		return scheme === "wasd"
+			? { left: 65, up: 87, right: 68, down: 83 } // A, W, D, S
+			: { left: 37, up: 38, right: 39, down: 40 }; // Arrow keys
 	}
 
 	update(delta) {
