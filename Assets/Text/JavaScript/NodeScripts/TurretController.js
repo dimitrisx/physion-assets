@@ -32,7 +32,7 @@ class TurretController {
 			{ value: "capsule", label: "Capsule" },
 		],
 	};
-	static PD_bulletProps = { path: "bulletProps", defaultValue: { ttl: 2000, fillColor: 0xb5a642, bullet: true, fixedRotation: false, angularDamping: 1, gravityScale: 1, friction: 0.05, restitution: 0.05, density: 3, filterGroupIndex: 0, drawLine: false }, description: "Properties applied to each spawned bullet node." };
+	static PD_bulletProps = { path: "bulletProps", defaultValue: { ttl: 2000, fillColor: 0xb5a642, bullet: true, fixedRotation: false, angularDamping: 1, gravityScale: 1, friction: 0.05, restitution: 0.05, density: 3, filterGroupIndex: 0, drawLine: false, userData: { bullet: true } }, description: "Properties applied to each spawned bullet node." };
 	static PD_bulletVelocity = { path: "bulletVelocity", defaultValue: 50, min: 10, max: 120, step: 10, description: "Initial speed of spawned bullets, in meters per second." };
 	static PD_bulletTrail = { path: "bulletTrail", defaultValue: true, description: "Attaches a particle trail to each bullet." };
 	static PD_bulletSprite = { path: "bulletSprite", defaultValue: false, description: "Renders bullets with a bullet image instead of a plain shape." };
@@ -192,7 +192,7 @@ class TurretController {
 		config.particleTexture = "circle_05";
 		config.alpha = { start: 0.3, end: 0 };
 		config.speed = { start: 0, end: 0 };
-		config.scale = { start: 0.5, end: 0.1 };
+		config.scale = { start: 0.1, end: 0.01 };
 		config.color.start = physion.utils.toHexString(bullet.fillColor);
 		config.color.end = "#000000";
 		config.startRotation = { min: 0, max: 0 };

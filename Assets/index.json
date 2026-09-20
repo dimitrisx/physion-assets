@@ -376,6 +376,13 @@
 		]
 	},
 	{
+		"path": "Assets/Text/JavaScript/NodeScripts/Chaser.js",
+		"mime": "text/javascript",
+		"tags": [
+			"NodeScript"
+		]
+	},
+	{
 		"path": "Assets/Text/JavaScript/NodeScripts/CircularMotion.js",
 		"mime": "text/javascript",
 		"tags": [
